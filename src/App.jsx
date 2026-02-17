@@ -35,7 +35,14 @@ function App() {
         setForecast(null)
       }
     } catch (err) {
-      setError('Failed to fetch weather data. Please try again.')
+      console.error('Error:', err)
+      if (err.message.includes('API key')) {
+        setError('Weather API is not configured. Please check your .env file.')
+      } else if (err.message.includes('404')) {
+        setError(`City "${cityName}" not found. Please try another city.`)
+      } else {
+        setError('Failed to fetch weather data. Please try again.')
+      }
       setWeather(null)
       setForecast(null)
     } finally {
