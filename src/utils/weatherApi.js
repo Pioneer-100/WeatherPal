@@ -90,6 +90,75 @@ export async function fetchWeather(cityName) {
   }
 }
 
+export async function fetchWeatherByCoords(latitude, longitude) {
+  try {
+    if (!API_KEY) {
+      throw new Error('Weather API key is not configured. Please set VITE_WEATHER_API_KEY in .env file.')
+    }
+
+    // Fetch current weather using coordinates
+    const currentResponse = await fetch(
+      `${BASE_URL}/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
+    )
+
+    if (!currentResponse.ok) {
+      throw new Error(`Weather API error: ${currentResponse.status}`)
+    }
+
+    const currentData = await currentResponse.json()
+    const cityName = currentData.name
+
+    // Fetch forecast using coordinates
+    const forecastResponse = await fetch(
+      `${BASE_URL}/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
+    )
+
+    if (!forecastResponse.ok) {
+      throw new Error(`Weather API error: ${forecastResponse.status}`)
+    }
+
+    const forecastData = await forecastResponse.json()
+
+    // Process forecast data - group by day and get min/max temps
+    const dailyForecasts = {}
+    
+    forecastData.list.forEach((item) => {
+      const day = getDayName(item.dt)
+      if (!dailyForecasts[day]) {
+        dailyForecasts[day] = {
+          temps: [],
+          conditions: [],
+        }
+      }
+      dailyForecasts[day].temps.push(item.main.temp)
+      dailyForecasts[day].conditions.push(item.weather[0].main)
+    })
+
+    const forecast = Object.entries(dailyForecasts)
+      .slice(0, 5)
+      .map(([day, data]) => ({
+        day,
+        condition: formatWeatherDescription(data.conditions[0]),
+        high: Math.round(Math.max(...data.temps)),
+        low: Math.round(Math.min(...data.temps)),
+      }))
+
+    return {
+      city: currentData.name,
+      country: currentData.sys.country,
+      temperature: Math.round(currentData.main.temp),
+      condition: formatWeatherDescription(currentData.weather[0].description),
+      humidity: currentData.main.humidity,
+      windSpeed: currentData.wind.speed,
+      feelsLike: Math.round(currentData.main.feels_like),
+      forecast,
+    }
+  } catch (error) {
+    console.error('Weather API Error:', error)
+    throw error
+  }
+}
+
 export function getAvailableCities() {
   return ['London', 'New York', 'Tokyo', 'Sydney', 'Paris', 'Dubai', 'Singapore', 'Toronto']
 }
