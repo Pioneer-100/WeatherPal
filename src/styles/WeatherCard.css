@@ -1,11 +1,12 @@
 .weather-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 16px;
   padding: 30px;
-  color: white;
-  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
+  color: #333;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   margin-bottom: 30px;
   animation: slideIn 0.5s ease-out;
+  backdrop-filter: blur(10px);
 }
 
 .weather-card.empty {
@@ -69,7 +70,7 @@
   gap: 20px;
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .detail {
@@ -80,10 +81,11 @@
 
 .label {
   font-size: 12px;
-  opacity: 0.8;
+  opacity: 0.7;
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 8px;
+  color: #666;
 }
 
 .value {
