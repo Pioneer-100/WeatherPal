@@ -2,9 +2,7 @@ import { useState } from 'react'
 import SearchBar from './components/SearchBar'
 import WeatherCard from './components/WeatherCard'
 import ForecastCard from './components/ForecastCard'
-import WeatherVisualization from './components/WeatherVisualization'
 import { fetchWeather, getAvailableCities } from './utils/weatherApi'
-import { generateWeatherVisualization } from './utils/aiVisualization'
 import './App.css'
 
 function App() {
@@ -69,11 +67,6 @@ function App() {
         {weather && (
           <>
             <WeatherCard weather={weather} />
-            <WeatherVisualization 
-              weather={weather} 
-              onGenerate={generateWeatherVisualization}
-              isLoading={loading}
-            />
             <ForecastCard forecast={forecast} />
           </>
         )}
