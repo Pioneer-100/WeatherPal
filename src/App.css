@@ -88,6 +88,36 @@ body {
   z-index: 1;
 }
 
+/* Layout for side-by-side weather + forecast */
+.weather-grid {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.weather-left {
+  flex: 1 1 55%;
+  min-width: 260px;
+}
+
+.weather-right {
+  flex: 1 1 45%;
+  min-width: 220px;
+}
+
+@media (max-width: 840px) {
+  .weather-grid {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .app-main {
+    padding: 16px;
+  }
+}
+
 .loading {
   text-align: center;
   padding: 40px 20px;

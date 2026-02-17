@@ -65,10 +65,14 @@ function App() {
         {error && <div className="error-message">{error}</div>}
         
         {weather && (
-          <>
-            <WeatherCard weather={weather} />
-            <ForecastCard forecast={forecast} />
-          </>
+          <div className="weather-grid">
+            <div className="weather-left">
+              <WeatherCard weather={weather} />
+            </div>
+            <div className="weather-right">
+              <ForecastCard forecast={forecast} />
+            </div>
+          </div>
         )}
 
         {!weather && !loading && !error && (
