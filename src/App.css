@@ -92,19 +92,19 @@ body {
 .weather-grid {
   display: flex;
   gap: 20px;
-  align-items: flex-start;
+  align-items: stretch; /* make children equal height */
   justify-content: center;
   width: 100%;
   margin-top: 12px;
 }
 
 .weather-left {
-  flex: 1 1 55%;
+  flex: 1.5 1 60%; /* wider left column */
   min-width: 260px;
 }
 
 .weather-right {
-  flex: 1 1 45%;
+  flex: 1 1 40%; /* narrower right column */
   min-width: 220px;
 }
 
