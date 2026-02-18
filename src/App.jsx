@@ -8,6 +8,7 @@ import './App.css'
 function App() {
   const [weather, setWeather] = useState(null)
   const [forecast, setForecast] = useState(null)
+  const [selectedForecast, setSelectedForecast] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
@@ -29,6 +30,7 @@ function App() {
           feelsLike: data.feelsLike,
         })
         setForecast(data.forecast)
+        setSelectedForecast(null)
       } else {
         setError(`City "${cityName}" not found. Try: ${getAvailableCities().join(', ')}`)
         setWeather(null)
@@ -67,10 +69,10 @@ function App() {
         {weather && (
           <div className="weather-grid">
             <div className="weather-left">
-              <WeatherCard weather={weather} />
+              <WeatherCard weather={weather} selectedForecast={selectedForecast} onClearSelection={() => setSelectedForecast(null)} />
             </div>
             <div className="weather-right">
-              <ForecastCard forecast={forecast} />
+              <ForecastCard forecast={forecast} onSelect={(day) => setSelectedForecast(day)} selectedDay={selectedForecast} />
             </div>
           </div>
         )}
