@@ -1,65 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap');
+
 :root {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color-scheme: light;
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Theme colors - Default Clear Sky Dark Glass */
+  --bg-gradient-start: #0f172a;
+  --bg-gradient-end: #1e293b;
+  --accent-color: #38bdf8;
+  --accent-glow: rgba(56, 189, 248, 0.35);
+
+  --glass-bg: rgba(30, 41, 59, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --card-radius: 20px;
+  --btn-radius: 12px;
+}
+
+/* Weather Themes */
+body.theme-clear-day {
+  --bg-gradient-start: #0284c7;
+  --bg-gradient-end: #0369a1;
+  --accent-color: #fde047;
+  --accent-glow: rgba(253, 224, 71, 0.4);
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-border: rgba(255, 255, 255, 0.25);
+}
+
+body.theme-clear-night {
+  --bg-gradient-start: #090d16;
+  --bg-gradient-end: #111827;
+  --accent-color: #818cf8;
+  --accent-glow: rgba(129, 140, 248, 0.35);
+  --glass-bg: rgba(17, 24, 39, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+body.theme-rain {
+  --bg-gradient-start: #1e293b;
+  --bg-gradient-end: #0f172a;
+  --accent-color: #60a5fa;
+  --accent-glow: rgba(96, 165, 250, 0.35);
+  --glass-bg: rgba(30, 41, 59, 0.7);
+}
+
+body.theme-thunderstorm {
+  --bg-gradient-start: #0f172a;
+  --bg-gradient-end: #2e1065;
+  --accent-color: #c084fc;
+  --accent-glow: rgba(192, 132, 252, 0.4);
+  --glass-bg: rgba(15, 23, 42, 0.75);
+}
+
+body.theme-snow {
+  --bg-gradient-start: #334155;
+  --bg-gradient-end: #1e293b;
+  --accent-color: #e0f2fe;
+  --accent-glow: rgba(224, 242, 254, 0.4);
+  --glass-bg: rgba(255, 255, 255, 0.15);
 }
 
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  min-width: 320px;
+  font-family: var(--font-body);
+  background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+  color: var(--text-primary);
   min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.8s ease;
 }
 
-#root {
-  width: 100%;
-  min-height: 100vh;
+/* Glassmorphism utility */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--card-radius);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-a {
-  font-weight: 500;
-  color: inherit;
-  text-decoration: inherit;
+.glass-panel:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  transition: all 0.25s;
-}
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+/* Canvas overlay */
+.weather-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* Scrollbars */
+::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
 }
