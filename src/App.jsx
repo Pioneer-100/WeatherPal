@@ -44,7 +44,7 @@ function App() {
   }, [favorites]);
 
   useEffect(() => {
-    handleSearch('London');
+    handleSearch('Harare');
   }, []);
 
   useEffect(() => {
@@ -179,7 +179,7 @@ function App() {
       {/* Loading Skeleton & Error State */}
       {loading && (
         <div className="loading-state glass-panel" style={{ padding: 40, textAlign: 'center' }}>
-          <div className="search-spinner" style={{ margin: '0 auto 16px', width: 32, height: 32 }} />
+          <div className="search-spinner" style={{ margin: '0 auto 16px', width: 25, height: 32 }} />
           <h3>Fetching latest atmospheric data...</h3>
         </div>
       )}
